@@ -33,6 +33,12 @@ class MealController extends Controller
         return view('meals.create');
     }
 
+    public function show (Meal $meal) 
+    {
+        $meal = $meal->load('foods');
+        return view('meals.show', compact('meal'));
+    }
+
     public function store (Request $request) 
     {
     	$this->validate($request, [

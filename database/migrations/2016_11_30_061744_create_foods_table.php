@@ -16,6 +16,7 @@ class CreateFoodsTable extends Migration
         Schema::create('foods', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('meal_id')->unsigned()->index();
+            $table->string('name')->required();
             $table->integer('protein')->unsigned();
             $table->integer('carbohydrate')->unsigned();
             $table->integer('fat')->unsigned();

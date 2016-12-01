@@ -21,6 +21,8 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/meals', 'MealController@all');
 
+Route::get('/meal/{meal}', 'MealController@show');
+
 Route::get('/meals/create', 'MealController@index');
 
 Route::post('/meals/add', 'MealController@store');

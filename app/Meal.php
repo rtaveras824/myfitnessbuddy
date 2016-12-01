@@ -22,4 +22,10 @@ class Meal extends Model
     {
     	return '/meal/' . $this->id;
     }
+
+    public function addFood (Food $food) 
+    {
+    	$food->meal_id = $this->id;
+    	return $this->foods()->save($food);
+    }
 }
