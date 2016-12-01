@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Meal;
 
 class MealController extends Controller
 {
@@ -16,6 +17,12 @@ class MealController extends Controller
         $this->middleware('auth');
     }
 
+    public function all () 
+    {
+        $meals = Meal::all();
+        return view('meals.all', compact('meals'));
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -26,12 +33,15 @@ class MealController extends Controller
         return view('meals.create');
     }
 
-    public function store (Request $request, Meal $meal) 
+    public function store (Request $request) 
     {
     	$this->validate($request, [
-    		'body' => 'required'
+    		'name' => 'required'
     	]);
 
-    	
+        $meal = new Meal($request->all());
+        $meal->user_id = $request->user()->id;
+    	$meal->save();
+        return back();
     }
 }
