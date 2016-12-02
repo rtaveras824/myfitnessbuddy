@@ -18,9 +18,9 @@ class MealController extends Controller
         $this->middleware('auth');
     }
 
-    public function all () 
+    public function all (Request $request) 
     {
-        $meals = Meal::all();
+        $meals = Meal::where('user_id', $request->user()->id)->get();
         return view('meals.all', compact('meals'));
     }
 
@@ -37,7 +37,18 @@ class MealController extends Controller
     public function show (Meal $meal) 
     {
         $meal = $meal->load('foods');
-        return view('meals.show', compact('meal'));
+
+        $totalProtein = 0;
+        $totalCarbohydrates = 0;
+        $totalFat = 0;
+
+        foreach ($meal->foods as $food) {
+            $totalProtein += $food->protein;
+            $totalCarbohydrates += $food->carbohydrate;
+            $totalFat += $food->fat;
+        }
+
+        return view('meals.show', compact('meal', 'totalProtein', 'totalCarbohydrates', 'totalFat'));
     }
 
     public function store (Request $request) 

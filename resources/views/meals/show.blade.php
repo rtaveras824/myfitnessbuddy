@@ -4,9 +4,23 @@
 	<div class="container">
 		<h1>{{ $meal->name }}</h1>
 			<div class="panel panel-default">
-				@foreach ($meal->foods as $food)
-					<li>{{ $food->name }}</li>
-				@endforeach
+				<div class="panel-heading">Protein: {{ $totalProtein }} Carbohydrates: {{ $totalCarbohydrates }} Fat: {{ $totalFat }}</div>
+				<table class="table">
+					<tr>
+						<th>Name</th>
+						<th>Protein</th>
+						<th>Carbohydrates</th>
+						<th>Fat</th>
+					</tr>
+					@foreach ($meal->foods as $food)
+						<tr>
+							<td>{{ $food->name }}</td>
+							<td>{{ $food->protein }}</td>
+							<td>{{ $food->carbohydrate }}</td>
+							<td>{{ $food->fat }}</td>
+						</tr>
+					@endforeach
+				</table>
 
 				<form method="POST" action="/meal/{{ $meal->id }}/addfood">
 					<!-- <input type="hidden" name="user_id" value="1"> -->
