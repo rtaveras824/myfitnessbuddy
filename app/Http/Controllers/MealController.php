@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Meal;
+use App\Food;
 
 class MealController extends Controller
 {
@@ -48,6 +49,17 @@ class MealController extends Controller
         $meal = new Meal($request->all());
         $meal->user_id = $request->user()->id;
     	$meal->save();
+        return back();
+    }
+
+    public function storeFood (Request $request, Meal $meal) 
+    {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $food = new Food($request->all());
+        $meal->addFood($food);
         return back();
     }
 }
